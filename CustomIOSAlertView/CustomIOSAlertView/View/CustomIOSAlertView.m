@@ -239,28 +239,28 @@ CGFloat buttonSpacerHeight = 0;
 
     // This is the dialog's container; we attach the custom content and the buttons to this one
     UIView *dialogContainer = [[UIView alloc] initWithFrame:CGRectMake((screenSize.width - dialogSize.width) / 2, (screenSize.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height)];
-
+    dialogContainer.backgroundColor = [UIColor whiteColor];
     // First, we style the dialog to match the iOS7 UIAlertView >>>
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = dialogContainer.bounds;
-    gradient.colors = [NSArray arrayWithObjects:
-                       (id)[[UIColor colorWithRed:218.0/255.0 green:218.0/255.0 blue:218.0/255.0 alpha:1.0f] CGColor],
-                       (id)[[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0f] CGColor],
-                       (id)[[UIColor colorWithRed:218.0/255.0 green:218.0/255.0 blue:218.0/255.0 alpha:1.0f] CGColor],
-                       nil];
+//    CAGradientLayer *gradient = [CAGradientLayer layer];
+//    gradient.frame = dialogContainer.bounds;
+//    gradient.colors = [NSArray arrayWithObjects:
+//                       (id)[[UIColor colorWithRed:218.0/255.0 green:218.0/255.0 blue:218.0/255.0 alpha:1.0f] CGColor],
+//                       (id)[[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0f] CGColor],
+//                       (id)[[UIColor colorWithRed:218.0/255.0 green:218.0/255.0 blue:218.0/255.0 alpha:1.0f] CGColor],
+//                       nil];
+//
+//    CGFloat cornerRadius = kCustomIOSAlertViewCornerRadius;
+//    gradient.cornerRadius = cornerRadius;
+//    [dialogContainer.layer insertSublayer:gradient atIndex:0];
 
-    CGFloat cornerRadius = kCustomIOSAlertViewCornerRadius;
-    gradient.cornerRadius = cornerRadius;
-    [dialogContainer.layer insertSublayer:gradient atIndex:0];
-
-    dialogContainer.layer.cornerRadius = cornerRadius;
+    dialogContainer.layer.cornerRadius = kCustomIOSAlertViewCornerRadius;
     dialogContainer.layer.borderColor = [[UIColor colorWithRed:198.0/255.0 green:198.0/255.0 blue:198.0/255.0 alpha:1.0f] CGColor];
     dialogContainer.layer.borderWidth = 1;
-    dialogContainer.layer.shadowRadius = cornerRadius + 5;
-    dialogContainer.layer.shadowOpacity = 0.1f;
-    dialogContainer.layer.shadowOffset = CGSizeMake(0 - (cornerRadius+5)/2, 0 - (cornerRadius+5)/2);
-    dialogContainer.layer.shadowColor = [UIColor blackColor].CGColor;
-    dialogContainer.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:dialogContainer.bounds cornerRadius:dialogContainer.layer.cornerRadius].CGPath;
+//    dialogContainer.layer.shadowRadius = cornerRadius + 5;
+//    dialogContainer.layer.shadowOpacity = 0.1f;
+//    dialogContainer.layer.shadowOffset = CGSizeMake(0 - (cornerRadius+5)/2, 0 - (cornerRadius+5)/2);
+//    dialogContainer.layer.shadowColor = [UIColor blackColor].CGColor;
+//    dialogContainer.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:dialogContainer.bounds cornerRadius:dialogContainer.layer.cornerRadius].CGPath;
 
     // There is a line above the button
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, dialogContainer.bounds.size.height - buttonHeight - buttonSpacerHeight, dialogContainer.bounds.size.width, buttonSpacerHeight)];
@@ -303,7 +303,7 @@ CGFloat buttonSpacerHeight = 0;
         [closeButton setTitleColor:[UIColor colorWithRed:0.0f green:0.5f blue:1.0f alpha:1.0f] forState:UIControlStateNormal];
         [closeButton setTitleColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:0.5f] forState:UIControlStateHighlighted];
         [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
-        [closeButton.layer setCornerRadius:kCustomIOSAlertViewCornerRadius];
+        closeButton.layer.masksToBounds = YES;
         
         closeButton.buttonBackgroundColor = self.buttonBackgroundColor;
         closeButton.buttonSelectedBackgroundColor = self.buttonSelectedBackgroundColor;
@@ -313,6 +313,7 @@ CGFloat buttonSpacerHeight = 0;
         
         [container addSubview:closeButton];
     }
+    container.layer.masksToBounds = YES;
 }
 
 // Helper function: count and return the dialog's size
