@@ -12,6 +12,41 @@
 #import "CustomIOSAlertView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface CustomIOSAlertViewButton:UIButton
+@property (strong, nonatomic) UIColor *buttonBackgroundColor;
+@property (strong, nonatomic) UIColor *buttonSelectedBackgroundColor;
+@end
+
+@implementation CustomIOSAlertViewButton
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    if (selected) {
+        if (_buttonSelectedBackgroundColor) {
+            self.backgroundColor = _buttonSelectedBackgroundColor;
+        }
+    } else {
+        if (_buttonBackgroundColor) {
+            self.backgroundColor = _buttonBackgroundColor;
+        }
+    }
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+    if (highlighted) {
+        if (_buttonSelectedBackgroundColor) {
+            self.backgroundColor = _buttonSelectedBackgroundColor;
+        }
+    } else {
+        if (_buttonBackgroundColor) {
+            self.backgroundColor = _buttonBackgroundColor;
+        }
+    }
+}
+
+@end
+
 const static CGFloat kCustomIOSAlertViewDefaultButtonHeight       = 50;
 const static CGFloat kCustomIOSAlertViewDefaultButtonSpacerHeight = 1;
 const static CGFloat kCustomIOSAlertViewCornerRadius              = 7;
@@ -232,7 +267,13 @@ CGFloat buttonSpacerHeight = 0;
     lineView.backgroundColor = [UIColor colorWithRed:198.0/255.0 green:198.0/255.0 blue:198.0/255.0 alpha:1.0f];
     [dialogContainer addSubview:lineView];
     // ^^^
-
+    if (buttonTitles.count > 1) {
+        for (int i = 1; i < buttonTitles.count; i++) {
+            UIView *verticalLineView = [[UIView alloc] initWithFrame:CGRectMake(dialogContainer.bounds.size.width/buttonTitles.count*i, dialogContainer.bounds.size.height - buttonHeight - buttonSpacerHeight, buttonSpacerHeight, buttonHeight)];
+            verticalLineView.backgroundColor = [UIColor colorWithRed:198.0/255.0 green:198.0/255.0 blue:198.0/255.0 alpha:1.0f];
+            [dialogContainer addSubview:verticalLineView];
+        }
+    }
     // Add the custom container if there is any
     [dialogContainer addSubview:containerView];
 
@@ -251,7 +292,7 @@ CGFloat buttonSpacerHeight = 0;
 
     for (int i=0; i<[buttonTitles count]; i++) {
 
-        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        CustomIOSAlertViewButton *closeButton = [CustomIOSAlertViewButton buttonWithType:UIButtonTypeCustom];
 
         [closeButton setFrame:CGRectMake(i * buttonWidth, container.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)];
 
@@ -263,7 +304,13 @@ CGFloat buttonSpacerHeight = 0;
         [closeButton setTitleColor:[UIColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:0.5f] forState:UIControlStateHighlighted];
         [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
         [closeButton.layer setCornerRadius:kCustomIOSAlertViewCornerRadius];
-
+        
+        closeButton.buttonBackgroundColor = self.buttonBackgroundColor;
+        closeButton.buttonSelectedBackgroundColor = self.buttonSelectedBackgroundColor;
+        [closeButton setTitleColor:self.buttonTextColor forState:UIControlStateNormal];
+        [closeButton setTitleColor:self.buttonTextSelectedColor forState:UIControlStateSelected | UIControlStateHighlighted];
+        closeButton.titleLabel.font = self.buttonTextFont;
+        
         [container addSubview:closeButton];
     }
 }

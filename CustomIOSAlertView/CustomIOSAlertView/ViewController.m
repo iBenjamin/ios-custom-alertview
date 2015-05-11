@@ -46,6 +46,11 @@
 
     // Modify the parameters
     [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Close1", @"Close2", @"Close3", nil]];
+    alertView.buttonTextFont = [UIFont systemFontOfSize:19.0f];
+    alertView.buttonTextColor = [UIColor blackColor];
+    alertView.buttonTextSelectedColor = [UIColor whiteColor];
+    alertView.buttonBackgroundColor = [UIColor clearColor];
+    alertView.buttonSelectedBackgroundColor = [UIColor colorWithRed:0.918 green:0.314 blue:0.584 alpha:1];
     [alertView setDelegate:self];
     
     // You may use a Block, rather than a delegate.

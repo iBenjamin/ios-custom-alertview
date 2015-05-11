@@ -29,6 +29,12 @@
 
 @property (copy) void (^onButtonTouchUpInside)(CustomIOSAlertView *alertView, int buttonIndex) ;
 
+@property (strong, nonatomic) UIColor *buttonTextColor;
+@property (strong, nonatomic) UIColor *buttonTextSelectedColor;
+@property (strong, nonatomic) UIColor *buttonBackgroundColor;
+@property (strong, nonatomic) UIColor *buttonSelectedBackgroundColor;
+@property (strong, nonatomic) UIFont  *buttonTextFont;
+
 - (id)init;
 
 /*!
